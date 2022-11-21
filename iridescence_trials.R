@@ -1,29 +1,44 @@
-#Edit askpass error
+
 #Iridescence trial workflow
-install.packages("usethis")
-library(usethis)
-install.packages("openssl")
-library(openssl)
 
+####Remove below section - used to edit askpass error
 use_git_config(user.name = "map469", user.email = "map469@cornell.edu")
-
 install.packages("gitcreds")
-
 library(gitcreds) # install.packages("gitcreds")
 gitcreds_set()
+####Remove above section - used to edit askpass error
 
 #Read in csv file
-color <- read.csv("06_03_22_irid.csv")
+color <- read.csv("11_20_2022_irid.csv")
 
 #Check what the database structure is 
 str(color)
+#check to make sure that you have species appears first in the structure
+#check to be sure all NA species are removed from your dataset
+#11_20_2022 <--- 11_14_2022 with NA data removed from Species_Avonet
+
 
 #Convert relevant columns to factors. 
 ##NOTE: This is only the first three of many columns. Others still need adding.
 ##NOTE: Currently most columns have text or missing values that need changing. 
+
 color$species_iridescence <- factor(color$Species_Iridescence)
 color$male_iridescence <- factor(color$Male_Iridescence)
-color$Contour_Feathers <- factor(color$Contour_Feathers)
+color$female_iridescence <- factor(color$Female_Iridescence)
+color$body_feathers <- factor(color$Body_Feathers)
+color$body_male <- factor(color$Body_Male)
+color$body_female <-factor(color$Body_Female)
+color$flight_feathers <- factor(color$Flight_Feathers)
+color$flight_male <- factor(color$Flight_Male)
+color$flight_female <-factor(color$Flight_Female)
+color$nonflight_feathers <- factor(color$NonFlight_Feathers)
+color$nonflight_male <- factor(color$NonFlight_Male)
+color$nonflight_female <-factor(color$NonFlight_Female)
+color$dorsal_feathers <- factor(color$Dorsal_Feathers)
+color$dorsal_male <- factor(color$Dorsal_Male)
+color$dorsal_female <-factor(color$Dorsal_Female)
+color$primary.lifestyle <- factor(color$Primary.Lifestyle)
+color$habitat <- factor(color$Habitat)
 
 #Load packages for analysis
 library(ape)
@@ -33,9 +48,9 @@ library(phytools)
 
 #Read in the tree
 ir_names <- read.csv("ir_names.csv") #This is the names file that you create from the iridescence database folder.
-ir_dataframe <- data.frame(ir_names)
+ir_dataframe <- data.frame(ir_names) #kept getting error "some levels of species do not have a row entry in ginverse"
+#suggested to add Data <- as.data.frame(Data), attempted and returned to orignal text 11/20/2022
 rownames(ir_dataframe) <- ir_names [,1] 
-
 ir_tree <- read.tree ("BirdTree_Jetz.tre") #This is the tree file from Eliot
 
 #check for overlap between the tree and dataframe, and drop tips on the tree
@@ -50,8 +65,10 @@ inv.tree <- inverseA (tree, nodes = "ALL", scale = TRUE)
 #Set priors for the MCMCglmm model. 
 ##Note: these are relatively uninformative priors. I suggest keeping them for your initial analysis. 
 ##Before finalizing the analysis it would be good to check how much changing the priors affects results (e.g., change to v = 1, nu = 2) 
-prior1 <- list (G=list (G1=list (V=1,nu=0.002)), #In this section of code the number of "G-lists" you have equates with the number of random effects in your model. 
+prior1 <- list (G=list (G1=list (V=1,nu=0.002)), 
               R=list(V=1,nu=0.002))
+#In this section of code the number of "G-lists" you have equates with the number of random effects in your model. 
+
 
 #Run the model 
 ##Note: this is code copied from a previous analysis. You'll need to change the names to your column and tree names. 
@@ -87,10 +104,9 @@ mean(lambda)
 posterior.mode(lambda)
 HPDinterval(lambda)
 
-
-
 # 2) Create Density and trace plots so that you can visually inspect them for independence and consistency of the posterior distribution. 
   ##Note: I had some trouble with this when re-running code in May 2022, error message "figure margins too large"
+  ##Update: error message continues "figure margins too large"
 plot(model_lat$VCV)
 
 # 3) Check Autocorrelation:
@@ -99,17 +115,16 @@ plot(model_lat$VCV)
 autocorr(model_lat$VCV)
 
 ####################
-####################
-####################  Hypothesis 1: Iridescence is reflected by Water Repellency
+####################  Water Repellency
+####################  Hypothesis 1: Iridescence is predicted by habitat
 ####################
 ####################
 
 #Sample model looking at the Habitat Marine (will need to add coastal, wetland into composite category) as a predictor of iridescence in flight feathers. 
-?MCMCglmm
+??MCMCglmm
 
 model_wet <- MCMCglmm(species_iridescence~1 + 
                         habitat,
-                      random = ~species,
                       family="categorical",
                       ginverse=list(species=inv.tree$Ainv), 
                       prior=prior1,
@@ -119,3 +134,6 @@ model_wet <- MCMCglmm(species_iridescence~1 +
                       thin=200) #specifies that every nth iteration is saved. 
 
 summary(model_wet)
+
+
+
