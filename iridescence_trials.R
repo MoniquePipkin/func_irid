@@ -9,13 +9,13 @@ gitcreds_set()
 ####Remove above section - used to edit askpass error
 
 #Read in csv file
-color <- read.csv("11_14_2022_irid.csv")
+color <- read.csv("11_21_2022_irid.csv")
 
 #Check what the database structure is 
 str(color)
-#check to make sure that you have species appears first in the structure
+#check to make sure that you have BirdTree_Species appears first in the structure
 #check to be sure all NA species are removed from your dataset
-#11_20_2022 <--- 11_14_2022 with NA data removed from Species_Avonet
+#
 
 
 #Convert relevant columns to factors. 
@@ -47,18 +47,17 @@ library(geiger)
 library(phytools)
 
 #Read in the tree
-ir_names <- read.csv("ir_names.csv") #This is the names file that you create from the iridescence database folder
-##### 11/20/2022update with JUST JETZ tree names and nothing else 
-ir_dataframe <- data.frame(ir_names) #kept getting error "some levels of species do not have a row entry in ginverse"
-#suggested to add Data <- as.data.frame(Data), attempted and returned to original text 11/20/2022
+ir_names <- read.csv("ir_names.csv") #This is a file with JETZ Tree names from the database 
+ir_dataframe <- data.frame(ir_names)
+#suggested to add Data <- data.frame(Data), attempted and returned to original text 11/20/2022
 rownames(ir_dataframe) <- ir_names [,1] 
 ir_tree <- read.tree ("BirdTree_Jetz.tre") #This is the tree file from Eliot
 
 #check for overlap between the tree and dataframe, and drop tips on the tree
 ir_overlap <- name.check(ir_tree, ir_dataframe)
 ir_tree_drop <- drop.tip(ir_tree,ir_overlap$tree_not_data)
-
- #Should output "OK" if all names match up. 
+ir_tree_drop
+#Should output "OK" if all names match up. 
 
 #Compute branch lengths of the tree
 tree <- compute.brlen(ir_tree_drop, method = "Grafen")
