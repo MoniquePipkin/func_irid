@@ -9,7 +9,7 @@ gitcreds_set()
 ####Remove above section - used to edit askpass error
 
 #Read in csv file
-color <- read.csv("11_20_2022_irid.csv")
+color <- read.csv("11_14_2022_irid.csv")
 
 #Check what the database structure is 
 str(color)
@@ -47,16 +47,18 @@ library(geiger)
 library(phytools)
 
 #Read in the tree
-ir_names <- read.csv("ir_names.csv") #This is the names file that you create from the iridescence database folder.
+ir_names <- read.csv("ir_names.csv") #This is the names file that you create from the iridescence database folder
+##### 11/20/2022update with JUST JETZ tree names and nothing else 
 ir_dataframe <- data.frame(ir_names) #kept getting error "some levels of species do not have a row entry in ginverse"
-#suggested to add Data <- as.data.frame(Data), attempted and returned to orignal text 11/20/2022
+#suggested to add Data <- as.data.frame(Data), attempted and returned to original text 11/20/2022
 rownames(ir_dataframe) <- ir_names [,1] 
 ir_tree <- read.tree ("BirdTree_Jetz.tre") #This is the tree file from Eliot
 
 #check for overlap between the tree and dataframe, and drop tips on the tree
 ir_overlap <- name.check(ir_tree, ir_dataframe)
 ir_tree_drop <- drop.tip(ir_tree,ir_overlap$tree_not_data)
-name.check (ir_tree_drop, ir_dataframe) #Should output "OK" if all names match up. 
+
+ #Should output "OK" if all names match up. 
 
 #Compute branch lengths of the tree
 tree <- compute.brlen(ir_tree_drop, method = "Grafen")
@@ -116,16 +118,23 @@ autocorr(model_lat$VCV)
 
 ####################
 ####################  Water Repellency
-####################  Hypothesis 1: Iridescence is predicted by habitat
+####################  Hypothesis 1: Iridescence is predicted by primary.lifestyle - aquatic
 ####################
 ####################
 
-#Sample model looking at the Habitat Marine (will need to add coastal, wetland into composite category) as a predictor of iridescence in flight feathers. 
+#Model examines primary.lifestyle as predictor of iridescence in flight feathers. 
 ??MCMCglmm
 
-model_wet <- MCMCglmm(species_iridescence~1 + 
-                        habitat,
-                      family="categorical",
+prior1 <- list (G=list (G1=list (V=1,nu=0.002)), 
+                R=list(V=1,nu=0.002))
+
+prior2 <- list (G=list (G1=list (V=1,nu=2)), 
+                R=list(V=1,nu=0.002))
+
+model_wet <- MCMCglmm(Species_Iridescence~1 + 
+                        Primary.Lifestyle,
+                      random = ~species,
+                      family="binomial",
                       ginverse=list(species=inv.tree$Ainv), 
                       prior=prior1,
                       data=color,
@@ -135,5 +144,16 @@ model_wet <- MCMCglmm(species_iridescence~1 +
 
 summary(model_wet)
 
+model_wet2 <- MCMCglmm(Species_Iridescence~1 + 
+                        Primary.Lifestyle,
+                      random = ~Family,
+                      family="gaussian",
+                      ginverse=list(species=inv.tree$Ainv), 
+                      prior=prior1,
+                      data=color,
+                      nitt=50000,#specifies how many times the simulation is performed (ORIGINALLY 100k but changed for practice run)
+                      burnin=5000,#specifies how many simulations are discarded at the beginning
+                      thin=200) #specifies that every nth iteration is saved. 
 
+summary(model_wet)
 
