@@ -1,4 +1,5 @@
-﻿Nothocercus_bonapartei
+﻿species
+Nothocercus_bonapartei
 Tinamus_major
 Crypturellus_soui
 Crypturellus_cinnamomeus
@@ -8,7 +9,7 @@ Dendrocygna_viduata
 Dendrocygna_autumnalis
 Dendrocygna_arborea
 Dendrocygna_bicolor
-Chen_Canigica
+Chen_canagica
 Chen_caerulescens
 Chen_rossii
 Anser_albifrons
@@ -32,7 +33,7 @@ Anas_cyanoptera
 Anas_clypeata
 Anas_strepera
 Anas_penelope
-Mareca_americana
+Anas_americana
 Anas_laysanensis
 Anas_wyvilliana
 Anas_platyrhynchos
@@ -161,7 +162,7 @@ Geotrygon_violacea
 Geotrygon_caniceps
 Geotrygon_chrysia
 Geotrygon_mystacea
-"	Geotrygon_veraguensis"
+Geotrygon_veraguensis
 Leptotila_verreauxi
 Leptotila_jamaicensis
 Leptotila_cassini
@@ -298,7 +299,7 @@ Mellisuga_helenae
 Calliphlox_evelynae
 Calypte_anna
 Calypte_costae
-"	Stellula_calliope"
+Stellula_calliope
 Selasphorus_rufus
 Selasphorus_sasin
 Selasphorus_platycercus
@@ -333,7 +334,7 @@ Elvira_cupreiceps
 Elvira_chionura
 Goldmania_violiceps
 Goethalsia_bella
-"	Thalurania_ridgwayi"
+Thalurania_ridgwayi
 Eupherusa_poliocerca
 Eupherusa_cyanophrys
 Eupherusa_eximia
@@ -381,7 +382,7 @@ Laterallus_exilis
 Laterallus_jamaicensis
 Heliornis_fulica
 Aramus_guarauna
-Grus_canadensis_
+Grus_canadensis
 Grus_americana
 Burhinus_bistriatus
 Recurvirostra_americana
@@ -661,7 +662,7 @@ Harpyhaliaetus_solitarius
 Leucopternis_princeps
 Buteo_magnirostris
 Parabuteo_unicinctus
-Buteo_albicaudatus_
+Buteo_albicaudatus
 Leucopternis_albicollis
 Leucopternis_semiplumbeus
 Buteo_nitidus
@@ -1477,7 +1478,7 @@ Psittirostra_psittacea
 Pseudonestor_xanthophrys
 Hemignathus_lucidus
 Hemignathus_munroi
-Hemignathus_parvus_
+Hemignathus_parvus
 Hemignathus_virens
 Hemignathus_flavus
 Hemignathus_kauaiensis
@@ -1488,16 +1489,16 @@ Pinicola_enucleator
 Leucosticte_tephrocotis
 Leucosticte_atrata
 Leucosticte_australis
-Carpodacus_mexicanus_
+Carpodacus_mexicanus
 Carpodacus_purpureus
 Carpodacus_cassinii
 Serinus_mozambicus
-Carduelis_flammea_
+Carduelis_flammea
 Loxia_curvirostra
 Loxia_megaplaga
 Loxia_leucoptera
 Carduelis_carduelis
-"	Carduelis_pinus_"
+Carduelis_pinus
 Carduelis_atriceps
 Carduelis_notata
 Carduelis_xanthogastra
@@ -1520,7 +1521,7 @@ Chlorospingus_pileatus
 Chlorospingus_ophthalmicus
 Chlorospingus_tacarcunae
 Chlorospingus_inornatus
-"	Aimophila_carpalis"
+Aimophila_carpalis
 Aimophila_sumichrasti
 Aimophila_ruficauda
 Aimophila_humeralis
@@ -1561,7 +1562,7 @@ Zonotrichia_albicollis
 Amphispiza_belli
 Oriturus_superciliosus
 Pooecetes_gramineus
-"	Ammodramus_leconteii_"
+Ammodramus_leconteii
 Ammodramus_maritimus
 Ammodramus_nelsoni
 Ammodramus_caudacutus
@@ -1696,7 +1697,7 @@ Geothlypis_flavovelata
 Geothlypis_trichas
 Geothlypis_nelsoni
 Catharopeza_bishopi
-"	Dendroica_plumbea"
+Dendroica_plumbea
 Dendroica_angelae
 Dendroica_pharetra
 Wilsonia_citrina
@@ -1729,7 +1730,7 @@ Dendroica_townsendi
 Dendroica_occidentalis
 Dendroica_chrysoparia
 Dendroica_virens
-"	Phaeothlypis_fulvicauda"
+Phaeothlypis_fulvicauda
 Euthlypis_lachrymosa
 Basileuterus_rufifrons
 Basileuterus_melanogenys
@@ -1811,7 +1812,7 @@ Heterospingus_xanthopygius
 Hemithraupis_flavicollis
 Volatinia_jacarina
 Eucometis_penicillata
-Tachyphonus_luctuosus_
+Tachyphonus_luctuosus
 Tachyphonus_delatrii
 Tachyphonus_rufus
 Lanio_aurantius

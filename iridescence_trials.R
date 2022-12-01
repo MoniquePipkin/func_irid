@@ -6,10 +6,10 @@ use_git_config(user.name = "map469", user.email = "map469@cornell.edu")
 install.packages("gitcreds")
 library(gitcreds) # install.packages("gitcreds")
 gitcreds_set()
-####Remove above section - used to edit askpass error
+####Remove above section for final data analyses - used to edit askpass error
 
 #Read in csv file
-color <- read.csv("11_21_2022_irid.csv")
+color <- read.csv("12_01_2022_irid.csv")
 
 #Check what the database structure is 
 str(color)
@@ -49,15 +49,22 @@ library(phytools)
 #Read in the tree
 ir_names <- read.csv("ir_names.csv") #This is a file with JETZ Tree names from the database 
 ir_dataframe <- data.frame(ir_names)
-#suggested to add Data <- data.frame(Data), attempted and returned to original text 11/20/2022
 rownames(ir_dataframe) <- ir_names [,1] 
 ir_tree <- read.tree ("BirdTree_Jetz.tre") #This is the tree file from Eliot
+name.check (ir_tree, ir_dataframe) #Identifies mistmatched species
+#$tree_not_data are species that are in the tree and not your dataset
+#$data_not_tree are species that are in your data and don't appear in tree
+#We can reconcile this by dropping the unneccessary tips
+
 
 #check for overlap between the tree and dataframe, and drop tips on the tree
 ir_overlap <- name.check(ir_tree, ir_dataframe)
 ir_tree_drop <- drop.tip(ir_tree,ir_overlap$tree_not_data)
 ir_tree_drop
+name.check (ir_tree_drop, ir_dataframe)
 #Should output "OK" if all names match up. 
+#If problem persists, name check the species of concern
+
 
 #Compute branch lengths of the tree
 tree <- compute.brlen(ir_tree_drop, method = "Grafen")
@@ -80,13 +87,17 @@ prior1 <- list (G=list (G1=list (V=1,nu=0.002)),
 model_lat <- MCMCglmm(Flight_Feathers~1 + 
                         Centroid.Latitude,
                 random = ~species,
-                family="categorical",
+                family= "gaussian",
                 ginverse=list(species=inv.tree$Ainv), 
                 prior=prior1,
                 data=color,
                 nitt=50000,#specifies how many times the simulation is performed (ORIGINALLY 100k but changed for practice run)
                 burnin=5000,#specifies how many simulations are discarded at the beginning
                 thin=200) #specifies that every nth iteration is saved. 
+#"gaussian", "poisson", "categorical", "multinomial", "ordinal", "threshold", 
+# "exponential", "geometric", "cengaussian", "cenpoisson", "cenexponential", "zipoisson", 
+#"zapoisson", "ztpoisson", "hupoisson", "zibinomial", "threshold", "nzbinom" , "ncst", "msst" , 
+#"hubinomial", "ztmb" and "ztmultinomial"
 
 summary(model_lat)
 
