@@ -1,5 +1,5 @@
 
-#Iridescence trial workflow
+#Iridescence workflow
 
 ####Remove below section - used to edit askpass error
 use_git_config(user.name = "map469", user.email = "map469@cornell.edu")
@@ -84,10 +84,10 @@ prior1 <- list (G=list (G1=list (V=1,nu=0.002)),
 ##Note: For your final analyses you'll want to change nitt to 1,000,000.
 
 #Sample model looking at the centroid of latitude as a predictor of iridescence in flight feathers. 
-model_lat <- MCMCglmm(Flight_Feathers~1 + 
+model_lat <- MCMCglmm(flight_feathers~1 + 
                         Centroid.Latitude,
                 random = ~species,
-                family= "gaussian",
+                family= "categorical",
                 ginverse=list(species=inv.tree$Ainv), 
                 prior=prior1,
                 data=color,
@@ -98,7 +98,7 @@ model_lat <- MCMCglmm(Flight_Feathers~1 +
 # "exponential", "geometric", "cengaussian", "cenpoisson", "cenexponential", "zipoisson", 
 #"zapoisson", "ztpoisson", "hupoisson", "zibinomial", "threshold", "nzbinom" , "ncst", "msst" , 
 #"hubinomial", "ztmb" and "ztmultinomial"
-
+?MCMCglmm
 summary(model_lat)
 
 #Make sure to rerun with more informative priors (e.g., v=1, nu=1)

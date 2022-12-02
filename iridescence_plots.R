@@ -25,3 +25,30 @@ trait.plot(ir_tree, color, cols = list(color$species_iridescence = c("white", "b
 fmode<- as.factor(setNames(ir_dataframe[,1],rownames(ir_dataframe)))
 dotTree(ir_tree,fmode,colors=setNames(c("blue","red"),
                                       c("1","0")),ftype="i",fsize=0.7)
+
+#Should I use GGTree?
+
+library(ape)
+library(geiger) # for treedata() function
+library(caper)
+library(phytools)
+#library(RColorBrewer)
+library(ggplot2)
+library(here)
+library(readxl)
+library(here)
+library(tidyverse)
+library(phyloch)  #remotes::install_github("fmichonneau/phyloch")
+## For putting trait data on phylogeny
+library(ggimage)
+library(ggtree)
+library(TDbook)
+## To have two color scales
+library(ggnewscale)
+
+#function for reading trees
+f.treplot <-function(tree,...){
+  fsize<-36*par()$pin[2]/par()$pin[1]/Ntip(tree)
+  plotTree(tree,fsize=fsize,lwd=1,...)
+}
+color <- read.csv("12_01_2022_irid.csv")
